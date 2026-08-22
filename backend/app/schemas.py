@@ -93,6 +93,7 @@ class TripCreate(BaseModel):
     start_date: date
     end_date: date
     cover_photo: str | None = Field(default=None, max_length=500)
+    daily_budget: float | None = Field(default=None, ge=0)
 
     @model_validator(mode="after")
     def dates_in_order(self):
@@ -107,6 +108,7 @@ class TripUpdate(BaseModel):
     start_date: date | None = None
     end_date: date | None = None
     cover_photo: str | None = Field(default=None, max_length=500)
+    daily_budget: float | None = Field(default=None, ge=0)
     is_public: bool | None = None
 
 
@@ -179,6 +181,7 @@ class TripOut(BaseModel):
     start_date: date
     end_date: date
     cover_photo: str | None
+    daily_budget: float | None
     is_public: bool
     share_slug: str | None
     created_at: datetime
@@ -208,3 +211,37 @@ class ActivityPage(BaseModel):
     page: int
     page_size: int
     groups: list[GroupCount] = []
+
+
+class BudgetBreakdown(BaseModel):
+    transport: float
+    accommodation: float
+    meals: float
+    activities: float
+
+
+class CityCost(BaseModel):
+    city: str
+    country: str
+    nights: int
+    total: float
+
+
+class DayCost(BaseModel):
+    day: date
+    city: str | None
+    cost: float
+    over_budget: bool
+
+
+class TripBudget(BaseModel):
+    trip_id: int
+    trip_name: str
+    total: float
+    breakdown: BudgetBreakdown
+    total_days: int
+    average_per_day: float
+    daily_budget: float | None
+    by_city: list[CityCost]
+    daily: list[DayCost]
+    over_budget_days: int

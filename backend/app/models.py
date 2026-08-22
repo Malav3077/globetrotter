@@ -79,6 +79,7 @@ class Trip(Base):
     start_date: Mapped[date] = mapped_column(Date)
     end_date: Mapped[date] = mapped_column(Date)
     cover_photo: Mapped[str | None] = mapped_column(String(500), nullable=True)
+    daily_budget: Mapped[float | None] = mapped_column(Numeric(10, 2), nullable=True)
     is_public: Mapped[bool] = mapped_column(default=False)
     share_slug: Mapped[str | None] = mapped_column(String(40), unique=True, index=True, nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now())
