@@ -5,6 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { DonutChart } from "@/components/Charts";
+import CityTile from "@/components/CityTile";
 import { Empty, Loading } from "@/components/States";
 import { useAuth } from "@/components/AuthProvider";
 import { api } from "@/lib/api";
@@ -67,10 +68,8 @@ export default function SharedTripPage() {
   return (
     <div className="space-y-6">
       <div className="card overflow-hidden">
-        <div className="h-32 bg-brand-600" style={{
-          backgroundImage: trip.cover_photo ? `url(${trip.cover_photo})` : undefined,
-          backgroundSize: "cover", backgroundPosition: "center",
-        }} />
+        <CityTile name={trip.stops[0]?.city.name ?? trip.name}
+                  imageUrl={trip.cover_photo} className="h-32" />
         <div className="flex flex-wrap items-end justify-between gap-4 p-6">
           <div>
             <span className="chip bg-brand-50 text-brand-700">Shared itinerary</span>

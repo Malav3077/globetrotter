@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+import CityTile from "@/components/CityTile";
 import RequireAuth from "@/components/RequireAuth";
 import TripCard from "@/components/TripCard";
 import { Empty, Loading } from "@/components/States";
@@ -74,10 +75,7 @@ function DashboardBody() {
           {data.popular_cities.map((c) => (
             <Link key={c.id} href={`/explore?city=${c.id}`}
                   className="card overflow-hidden transition-shadow hover:shadow-md">
-              <div className="h-24 bg-ink-100" style={{
-                backgroundImage: c.image_url ? `url(${c.image_url})` : undefined,
-                backgroundSize: "cover", backgroundPosition: "center",
-              }} />
+              <CityTile name={c.name} imageUrl={c.image_url} />
               <div className="p-4">
                 <p className="font-medium text-ink-900">{c.name}</p>
                 <p className="text-sm text-ink-500">{c.country}</p>
