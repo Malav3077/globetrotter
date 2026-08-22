@@ -245,3 +245,17 @@ class TripBudget(BaseModel):
     by_city: list[CityCost]
     daily: list[DayCost]
     over_budget_days: int
+
+
+class PublicTrip(BaseModel):
+    trip: TripDetail
+    owner_name: str
+    budget: TripBudget
+
+
+class DashboardStats(BaseModel):
+    upcoming_trips: list[TripOut]
+    recent_trips: list[TripOut]
+    popular_cities: list[CityOut]
+    total_trips: int
+    total_planned_cost: float
