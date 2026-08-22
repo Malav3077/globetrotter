@@ -47,8 +47,10 @@ export function DonutChart({ slices, centerLabel, centerValue }: {
   );
 }
 
-export function BarChart({ bars, limit }: {
-  bars: { label: string; value: number; danger?: boolean }[]; limit?: number | null;
+export function BarChart({ bars, limit, format = money }: {
+  bars: { label: string; value: number; danger?: boolean }[];
+  limit?: number | null;
+  format?: (n: number) => string;
 }) {
   const max = Math.max(...bars.map((b) => b.value), limit ?? 0, 1);
 
@@ -69,7 +71,7 @@ export function BarChart({ bars, limit }: {
           </div>
           <span className={`w-20 shrink-0 text-right text-xs font-medium ${
             b.danger ? "text-danger-600" : "text-ink-700"}`}>
-            {money(b.value)}
+            {format(b.value)}
           </span>
         </div>
       ))}

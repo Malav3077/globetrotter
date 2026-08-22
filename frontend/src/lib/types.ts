@@ -65,3 +65,26 @@ export type Dashboard = {
 };
 
 export type PublicTrip = { trip: TripDetail; owner_name: string; budget: Budget };
+
+export type CommunityTrip = {
+  slug: string; name: string; description: string | null; owner_name: string;
+  start_date: string; end_date: string; city_count: number;
+  cities: string[]; total_cost: number;
+};
+
+export type NameCount = { name: string; extra: string | null; count: number };
+export type MonthCount = { month: string; count: number };
+
+export type AdminStats = {
+  total_users: number; total_trips: number; total_stops: number;
+  total_activities_booked: number; public_trips: number;
+  avg_trip_days: number; total_planned_cost: number;
+  popular_cities: NameCount[]; popular_activities: NameCount[];
+  trips_per_month: MonthCount[];
+};
+
+export type AdminUser = {
+  id: number; email: string; first_name: string; last_name: string | null;
+  city: string | null; country: string | null; is_admin: boolean;
+  created_at: string; trip_count: number;
+};
