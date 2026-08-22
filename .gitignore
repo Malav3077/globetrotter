@@ -29,3 +29,10 @@ npm-debug.log*
 
 # local tooling
 .claude/
+
+# next.js
+.next/
+out/
+next-env.d.ts
+CLAUDE.md
+AGENTS.md

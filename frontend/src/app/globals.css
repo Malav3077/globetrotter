@@ -1,0 +1,94 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink-50:  #f5f7fa;
+  --color-ink-100: #e9eef5;
+  --color-ink-200: #d3dce8;
+  --color-ink-300: #adbdd1;
+  --color-ink-400: #7d93b0;
+  --color-ink-500: #5b7393;
+  --color-ink-600: #465a78;
+  --color-ink-700: #394961;
+  --color-ink-800: #2b3749;
+  --color-ink-900: #1d2634;
+
+  --color-brand-50:  #ecfdf8;
+  --color-brand-100: #d0f9ec;
+  --color-brand-200: #a5f0dc;
+  --color-brand-300: #6ee1c7;
+  --color-brand-400: #37cbad;
+  --color-brand-500: #14b195;
+  --color-brand-600: #0a8e79;
+  --color-brand-700: #0b7162;
+  --color-brand-800: #0d5a50;
+  --color-brand-900: #0e4a43;
+
+  --color-sun-50:  #fffbeb;
+  --color-sun-400: #fbbf3c;
+  --color-sun-500: #f59e0b;
+  --color-sun-600: #d97706;
+
+  --color-danger-50:  #fef2f2;
+  --color-danger-500: #ef4444;
+  --color-danger-600: #dc2626;
+}
+
+:root {
+  --background: #f7f9fc;
+  --foreground: #1d2634;
+}
+
+html, body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+body {
+  font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+@utility card {
+  @apply bg-white border border-ink-100 rounded-xl shadow-sm;
+}
+
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5
+         text-sm font-medium transition-colors cursor-pointer
+         disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+@utility btn-primary {
+  @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5
+         text-sm font-medium transition-colors cursor-pointer
+         disabled:opacity-50 disabled:cursor-not-allowed
+         bg-brand-600 text-white hover:bg-brand-700;
+}
+
+@utility btn-ghost {
+  @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5
+         text-sm font-medium transition-colors cursor-pointer
+         disabled:opacity-50 disabled:cursor-not-allowed
+         bg-white text-ink-700 border border-ink-200 hover:bg-ink-50;
+}
+
+@utility btn-danger {
+  @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5
+         text-sm font-medium transition-colors cursor-pointer
+         disabled:opacity-50 disabled:cursor-not-allowed
+         bg-danger-500 text-white hover:bg-danger-600;
+}
+
+@utility input {
+  @apply w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm
+         text-ink-900 placeholder:text-ink-400 outline-none
+         focus:border-brand-500 focus:ring-2 focus:ring-brand-100;
+}
+
+@utility label {
+  @apply block text-sm font-medium text-ink-700 mb-1.5;
+}
+
+@utility chip {
+  @apply inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-medium;
+}
