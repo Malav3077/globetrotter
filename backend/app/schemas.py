@@ -186,3 +186,24 @@ class TripOut(BaseModel):
 
 class TripDetail(TripOut):
     stops: list[StopOut] = []
+
+
+class GroupCount(BaseModel):
+    key: str
+    count: int
+
+
+class CityPage(BaseModel):
+    items: list[CityOut]
+    total: int
+    page: int
+    page_size: int
+    groups: list[GroupCount] = []
+
+
+class ActivityPage(BaseModel):
+    items: list[ActivityOut]
+    total: int
+    page: int
+    page_size: int
+    groups: list[GroupCount] = []
