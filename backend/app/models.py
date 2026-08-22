@@ -88,6 +88,15 @@ class Trip(Base):
         back_populates="trip", cascade="all, delete-orphan", order_by="TripStop.order_index"
     )
 
+    @property
+    def status(self) -> str:
+        today = date.today()
+        if self.end_date < today:
+            return "completed"
+        if self.start_date > today:
+            return "upcoming"
+        return "ongoing"
+
 
 class TripStop(Base):
     """One city visit inside a trip. Non-activity costs live here."""

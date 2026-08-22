@@ -182,6 +182,7 @@ class TripOut(BaseModel):
     is_public: bool
     share_slug: str | None
     created_at: datetime
+    status: str
 
 
 class TripDetail(TripOut):
