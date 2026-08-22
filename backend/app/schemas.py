@@ -259,3 +259,30 @@ class DashboardStats(BaseModel):
     popular_cities: list[CityOut]
     total_trips: int
     total_planned_cost: float
+
+
+class ItineraryActivity(BaseModel):
+    id: int
+    name: str
+    category: str
+    cost: float
+    duration_mins: int
+    scheduled_at: datetime | None
+    notes: str | None
+
+
+class ItineraryDay(BaseModel):
+    day: date
+    day_number: int
+    city: str | None
+    country: str | None
+    activities: list[ItineraryActivity] = []
+    day_cost: float
+
+
+class TripItinerary(BaseModel):
+    trip_id: int
+    trip_name: str
+    start_date: date
+    end_date: date
+    days: list[ItineraryDay]
