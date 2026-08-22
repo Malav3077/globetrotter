@@ -1,12 +1,12 @@
 import secrets
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.orm import Session
 
 from app.database import get_db
 from app.models import StopActivity, Trip, TripStop, User
 from app.routers.budget import build_budget
-from app.schemas import PublicTrip, TripOut
+from app.schemas import CommunityTrip, PublicTrip, TripOut
 from app.security import get_current_user
 
 router = APIRouter(prefix="/api/public", tags=["public"])
@@ -71,3 +71,40 @@ def unshare(slug: str, user: User = Depends(get_current_user), db: Session = Dep
         raise HTTPException(404, "Trip not found")
     trip.is_public = False
     db.commit()
+
+
+@router.get("/community", response_model=list[CommunityTrip])
+def community_feed(
+    db: Session = Depends(get_db),
+    q: str | None = None,
+    country: str | None = None,
+    sort_by: str = Query("created_at", pattern="^(created_at|start_date|name)$"),
+    order: str = Query("desc", pattern="^(asc|desc)$"),
+):
+    """Every publicly shared itinerary, browsable by anyone."""
+    query = db.query(Trip).filter(Trip.is_public.is_(True), Trip.share_slug.isnot(None))
+    if q:
+        query = query.filter(Trip.name.ilike(f"%{q}%"))
+
+    column = getattr(Trip, sort_by)
+    trips = query.order_by(column.desc() if order == "desc" else column.asc()).all()
+
+    rows = []
+    for trip in trips:
+        cities = [s.city.name for s in trip.stops]
+        if country and not any(s.city.country == country for s in trip.stops):
+            continue
+        rows.append(
+            CommunityTrip(
+                slug=trip.share_slug,
+                name=trip.name,
+                description=trip.description,
+                owner_name=f"{trip.user.first_name} {trip.user.last_name or ''}".strip(),
+                start_date=trip.start_date,
+                end_date=trip.end_date,
+                city_count=len(cities),
+                cities=cities[:4],
+                total_cost=build_budget(trip).total,
+            )
+        )
+    return rows

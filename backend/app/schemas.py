@@ -286,3 +286,53 @@ class TripItinerary(BaseModel):
     start_date: date
     end_date: date
     days: list[ItineraryDay]
+
+
+class AdminUserRow(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    email: EmailStr
+    first_name: str
+    last_name: str | None
+    city: str | None
+    country: str | None
+    is_admin: bool
+    created_at: datetime
+    trip_count: int = 0
+
+
+class NameCount(BaseModel):
+    name: str
+    extra: str | None = None
+    count: int
+
+
+class MonthCount(BaseModel):
+    month: str
+    count: int
+
+
+class AdminStats(BaseModel):
+    total_users: int
+    total_trips: int
+    total_stops: int
+    total_activities_booked: int
+    public_trips: int
+    avg_trip_days: float
+    total_planned_cost: float
+    popular_cities: list[NameCount]
+    popular_activities: list[NameCount]
+    trips_per_month: list[MonthCount]
+
+
+class CommunityTrip(BaseModel):
+    slug: str
+    name: str
+    description: str | None
+    owner_name: str
+    start_date: date
+    end_date: date
+    city_count: int
+    cities: list[str]
+    total_cost: float
